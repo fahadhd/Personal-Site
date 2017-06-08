@@ -44,6 +44,10 @@ header {
     background: #161415 url(../images/header_img.jpg) no-repeat top center;
     background-size: cover !important;
     -webkit-background-size: cover !important;
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
     text-align: center;
     overflow: hidden;
 }
@@ -622,7 +626,7 @@ ul#nav li.current a {
 }
 
 .project-item .item-wrap {
-    background: #000000;
+    background: #fff;
     overflow: hidden;
     position: relative;
     -webkit-transition: all 0.3s ease-in-out;
@@ -637,24 +641,35 @@ ul#nav li.current a {
     cursor: pointer;
 }
 
+.project-1{
+    height: 500px;
+}
+
 
 /* overlay */
 
-.project-item .item-wrap .overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    -moz-opacity: 0;
-    filter: alpha(opacity=0);
-    -webkit-transition: opacity 0.3s ease-in-out;
-    -moz-transition: opacity 0.3s ease-in-out;
-    -o-transition: opacity 0.3s ease-in-out;
-    transition: opacity 0.3s ease-in-out;
-    background: url(../images/overlay-bg.png) repeat;
+.overlay {
+ position: absolute;
+ left: 0;
+ top: 0;
+ width: 100%;
+ height: 100%;
+ opacity: 0;
+ -moz-opacity: 0;
+ filter: alpha(opacity=0);
+ -webkit-transition: opacity 0.3s ease-in-out;
+ -moz-transition: opacity 0.3s ease-in-out;
+ -o-transition: opacity 0.3s ease-in-out;
+ transition: opacity 0.3s ease-in-out;
+ background: url(../images/overlay-bg.png) repeat;
 }
+
+.project-3 .overlay {
+    width: 75%;
+    height: 95%;
+}
+
+
 
 .project-item .item-wrap .link-icon {
     display: block;
@@ -722,22 +737,18 @@ ul#nav li.current a {
     margin: 0 auto;
 }
 
-#modal-01, #modal-02{
-  max-width: 460px;
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+#modal-02, #modal-03{
+  max-width: 450px;
   max-height: 60%;
 }
 
-
-#modal-03{
-  max-width: 500px;
-}
-
-#modal-03 .description-box{
-  background-color: #999999;
-}
-#modal-03 p {
- color: #000;
-}
 
 
 .popup-modal .description-box {

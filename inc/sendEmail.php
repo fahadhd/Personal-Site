@@ -1,13 +1,21 @@
-﻿<?php
+<?php
 
+require 'sendgrid-google-php-master/SendGrid_loader.php';
 // Replace this with your own email address
-$siteOwnersEmail = 'user@website.com';
+$toEmail = 'fha423@gmail.com';
+$fromEmail = 'fha0423@gmail.com';
+
+// Connect to your SendGrid account
+$sendgrid = new SendGrid\SendGrid('fha423', 'west0423');
+
+// Make a message object
+$mail = new SendGrid\Mail();
 
 
 if($_POST) {
 
    $name = trim(stripslashes($_POST['contactName']));
-   $email = trim(stripslashes($_POST['contactEmail']));
+   $formEmail = trim(stripslashes($_POST['contactEmail']));
    $subject = trim(stripslashes($_POST['contactSubject']));
    $contact_message = trim(stripslashes($_POST['contactMessage']));
 
@@ -16,7 +24,7 @@ if($_POST) {
 		$error['name'] = "Please enter your name.";
 	}
 	// Check Email
-	if (!preg_match('/^[a-z0-9&\'\.\-_\+]+@[a-z0-9\-]+\.([a-z0-9\-]+\.)*+[a-z]{2}/is', $email)) {
+	if (!preg_match('/^[a-z0-9&\'\.\-_\+]+@[a-z0-9\-]+\.([a-z0-9\-]+\.)*+[a-z]{2}/is', $formEmail)) {
 		$error['email'] = "Please enter a valid email address.";
 	}
 	// Check Message
@@ -29,27 +37,35 @@ if($_POST) {
 
    // Set Message
    $message .= "Email from: " . $name . "<br />";
-	$message .= "Email address: " . $email . "<br />";
+   $message .= "Email address: " . $formEmail . "<br />";
    $message .= "Message: <br />";
    $message .= $contact_message;
    $message .= "<br /> ----- <br /> This email was sent from your site's contact form. <br />";
 
+
    // Set From: header
-   $from =  $name . " <" . $email . ">";
+   $from =  $name . " <" . $formEmail . ">";
 
    // Email Headers
 	$headers = "From: " . $from . "\r\n";
-	$headers .= "Reply-To: ". $email . "\r\n";
+	$headers .= "Reply-To: ". $formEmail . "\r\n";
  	$headers .= "MIME-Version: 1.0\r\n";
 	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
 
    if (!$error) {
 
-      ini_set("sendmail_from", $siteOwnersEmail); // for windows server
-      $mail = mail($siteOwnersEmail, $subject, $message, $headers);
+	// Adding recipients and other message details
+	$mail->
+       addTo($toEmail)->
+       setFrom($fromEmail)->
+       setSubject($subject)->
+       setText($message);
 
-		if ($mail) { echo "OK"; }
+	// Use the Web API to send message
+	$sendgrid->send($mail);
+           
+	if ($sendgrid) { echo "OK"; }
       else { echo "Something went wrong. Please try again."; }
 		
 	} # end if - no validation error
